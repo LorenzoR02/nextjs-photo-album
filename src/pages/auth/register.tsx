@@ -2,6 +2,7 @@ import ErrorText from "@/components/ErrorText"
 import { auth } from "@/config/firebaseApp"
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { NextPage } from "next"
+import { useRouter } from "next/router"
 import { useState } from "react"
 
 const RegisterPage: NextPage = (props): JSX.Element => {
@@ -10,6 +11,8 @@ const RegisterPage: NextPage = (props): JSX.Element => {
   const [password, setPassword] = useState<string>('')
   const [confirm, setConfirm] = useState<string>('')
   const [error, setError] = useState<string>('')
+
+  const router = useRouter()
 
   const signUpWithEmailAndPassword = () => {
     event?.preventDefault();
@@ -25,8 +28,7 @@ const RegisterPage: NextPage = (props): JSX.Element => {
 
     createUserWithEmailAndPassword(auth, email, password)
       .then(result => {
-        // redirect to home page
-        console.log(result)
+        router.push('/')
       })
       .catch(error => {
         console.log(error)

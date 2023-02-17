@@ -12,9 +12,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Link href='/auth/signin' >SignIn</Link>
-        <Link href='/auth/signup' >SignUp</Link>
-        <Link href='/auth/signout' >SignOut</Link>
+        <Link href='/auth/register' >Register</Link>
+        <Link href='/auth/login' >Login</Link>
+        <Link href='/auth/logout' >Logout</Link>
         
       </main>
     </>
