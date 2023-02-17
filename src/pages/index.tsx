@@ -15,8 +15,8 @@ export default function Home() {
         <Link href='/auth/register' >Register</Link>
         <Link href='/auth/login' >Login</Link>
         <Link href='/auth/logout' >Logout</Link>
-        
       </main>
+
     </>
   )
 }

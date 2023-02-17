@@ -13,7 +13,8 @@ const LoginPage: NextPage = (props): JSX.Element => {
 
   const router = useRouter()
 
-  const signInWithEmailAndPassword = () => {
+  const loginWithEmailAndPassword = () => {
+    event?.preventDefault();
 
     if (error !== '') setError('')
 
@@ -21,14 +22,19 @@ const LoginPage: NextPage = (props): JSX.Element => {
 
     signInWithEmailAndPassword(auth, email, password)
     .then(result => {
-      
+      router.push('/')
+    })
+    .catch(error => {
+      console.log(error)
+      setError('Unable to sign in. Please try again later')
+      setAuthenticating(false)
     })
     
   }
 
   return (
     <div>
-      <form>
+      <form onSubmit={loginWithEmailAndPassword}>
         <span>Email</span>
         <input 
           type='email' 
@@ -46,7 +52,7 @@ const LoginPage: NextPage = (props): JSX.Element => {
         <input 
           disabled={authenticating}
           type='submit' 
-          value='Sign Up' />
+          value='Login' />
 
         <ErrorText error={error} />
       </form>
