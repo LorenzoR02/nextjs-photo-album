@@ -1,5 +1,6 @@
 import ErrorText from "@/components/ErrorText"
-import { auth } from "@/config/firebaseApp"
+import { auth } from "@/config/firebase"
+import { useAuth } from "@/context/AuthContext"
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { NextPage } from "next"
 import { useRouter } from "next/router"
