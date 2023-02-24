@@ -1,9 +1,10 @@
 import ErrorText from "@/components/ErrorText"
 import { useAuth } from "@/context/AuthContext"
+import { NextPage } from "next"
 import { useRouter } from "next/router"
 import { useState } from "react"
 
-const RegisterPage = () => {
+const RegisterPage: NextPage = (props): JSX.Element => {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

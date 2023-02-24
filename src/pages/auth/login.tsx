@@ -1,7 +1,5 @@
 import ErrorText from "@/components/ErrorText"
-import { auth } from "@/config/firebase"
 import { useAuth } from "@/context/AuthContext"
-import { signInWithEmailAndPassword } from "firebase/auth"
 import { NextPage } from "next"
 import { useRouter } from "next/router"
 import { useState } from "react"
@@ -11,48 +9,55 @@ const LoginPage: NextPage = (props): JSX.Element => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [error, setError] = useState<string>('')
+  const { user, login } = useAuth()
 
   const router = useRouter()
 
-  const loginWithEmailAndPassword = () => {
-    event?.preventDefault();
-
-    if (error !== '') setError('')
+  const loginWithEmailAndPassword = (e: any) => {
+    e.preventDefault();
+    setError('')
 
     setAuthenticating(true)
 
-    signInWithEmailAndPassword(auth, email, password)
-    .then(result => {
-      router.push('/')
-    })
-    .catch(error => {
-      console.log(error)
-      setError('Unable to sign in. Please try again later')
-      setAuthenticating(false)
-    })
-    
+    login(email, password)
+      .then(() => {
+        router.push('/')
+      })
+      .catch((error: any) => {
+
+        if (error.code.includes('auth/weak-password')) {
+          setError('Please enter a stronger password')
+        } else if (error.code.includes('auth/email-already-in-use')) {
+          setError('Email already in use')
+        } else {
+          setError('Unable to register. Please try again later')
+        }
+      })
+
+    setAuthenticating(false)
+
   }
 
   return (
     <div>
       <form onSubmit={loginWithEmailAndPassword}>
         <span>Email</span>
-        <input 
-          type='email' 
-          name='email' 
-          id='email' 
-          value={email} 
+        <input
+          type='email'
+          name='email'
+          id='email'
+          value={email}
           onChange={(text) => setEmail(text.target.value)} />
         <span>Password</span>
-        <input 
-          type='password' 
-          name='password' 
-          id='password' 
-          value={password} 
+        <input
+          type='password'
+          name='password'
+          id='password'
+          value={password}
           onChange={(text) => setPassword(text.target.value)} />
-        <input 
+        <input
           disabled={authenticating}
-          type='submit' 
+          type='submit'
           value='Login' />
 
         <ErrorText error={error} />

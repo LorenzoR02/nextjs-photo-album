@@ -1,3 +1,4 @@
+import '@/styles/globals.css'
 import Navbar from '@/components/Navbar'
 import { AuthContextProvider } from '@/context/AuthContext'
 import { AppProps } from 'next/app'
@@ -16,9 +17,10 @@ export default function App({ Component, pageProps }: AppProps) {
 
       <AuthContextProvider>
         <Navbar />
-        <h1 className='text-red-500'>ciao</h1>
-        <Component {...pageProps} />
 
+        <h1 className='text-xl font-bold'>Home</h1>
+
+        <Component {...pageProps} />
       </AuthContextProvider>
     </>
   )
