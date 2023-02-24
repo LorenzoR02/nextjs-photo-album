@@ -13,25 +13,24 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if(user){
+      if (user) {
         setUser({
           uid: user.uid,
           email: user.email,
-          displayName: user.displayName
+          displayName: user.displayName,
         })
-      }else{
+      } else {
         setUser(null)
       }
 
       setLoading(false)
-
+    
     })
 
-    return unsubscribe()
-
+    return () => unsubscribe()
   }, [])
-  
-  const register = (email: string, password: string) => {
+
+  const signup = (email: string, password: string) => {
     return createUserWithEmailAndPassword(auth, email, password)
   }
 
@@ -45,7 +44,7 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout }}>
+    <AuthContext.Provider value={{ user, login, signup, logout }}>
       {!loading && children}
     </AuthContext.Provider>
   )
