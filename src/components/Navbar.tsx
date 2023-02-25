@@ -1,14 +1,13 @@
 import { useAuth } from "@/context/AuthContext"
 import Link from "next/link"
-import { useRouter } from "next/router"
 
 function Navbar() {
-  const { user, logout } = useAuth()
-
-  const router = useRouter()
+  const { user } = useAuth()
 
   return (
-    <nav>
+    <nav className="shadow-md flex justify-between items-center p-4">
+      <Link href='/' className="font-bold text-lg" >Photo Album</Link>
+      <div className="flex gap-4">
       {!user
         ?
         <>
@@ -16,13 +15,9 @@ function Navbar() {
           <Link href='/auth/login' >Login</Link>
         </>
         :
-          <span onClick={() => {
-            
-            logout()
-            router.push('/auth/login')
-
-          }}>Logout</span>
+          <Link href='/auth/logout' >Logout</Link>
       }
+      </div>
     </nav>
   )
 }
