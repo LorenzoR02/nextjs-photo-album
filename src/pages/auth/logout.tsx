@@ -16,7 +16,7 @@ const LogoutPage: NextPage = (props): JSX.Element => {
   return (
     <div>
       <p>Are you sure you want to logout?</p>
-      <button onClick={() => { router.push('/') }}>Cancel</button>
+      <button onClick={() => { router.back() }}>Cancel</button>
       <button onClick={Logout}>Logout</button>
     </div>
   )
