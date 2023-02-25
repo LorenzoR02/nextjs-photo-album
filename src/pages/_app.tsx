@@ -3,8 +3,14 @@ import Navbar from '@/components/Navbar'
 import { AuthContextProvider } from '@/context/AuthContext'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
+import ProtectedRoute from '@/components/ProtectedRoute'
+
+const noAuthRequired = ['/', '/auth/login', '/auth/register']
 
 export default function App({ Component, pageProps }: AppProps) {
+
+  const router = useRouter()
 
   return (
     <>
@@ -17,10 +23,14 @@ export default function App({ Component, pageProps }: AppProps) {
 
       <AuthContextProvider>
         <Navbar />
-
-        <h1 className='text-xl font-bold'>Home</h1>
-
-        <Component {...pageProps} />
+        {noAuthRequired.includes(router.pathname)
+        ? 
+          <Component {...pageProps} />
+        :
+          <ProtectedRoute>
+            <Component {...pageProps} />
+          </ProtectedRoute>
+        }
       </AuthContextProvider>
     </>
   )

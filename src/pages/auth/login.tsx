@@ -21,7 +21,7 @@ const LoginPage: NextPage = (props): JSX.Element => {
 
     login(email, password)
       .then(() => {
-        router.push('/')
+        router.push('/gallery')
       })
       .catch((error: any) => {
 
