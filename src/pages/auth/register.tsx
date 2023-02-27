@@ -11,7 +11,7 @@ const RegisterPage: NextPage = (props): JSX.Element => {
   const [confirm, setConfirm] = useState('')
   const [registering, setRegistering] = useState(false)
   const [error, setError] = useState('')
-  const { user, register } = useAuth()
+  const { register } = useAuth()
   const router = useRouter()
 
   const signUpWithEmailAndPassword = (e: any) => {
@@ -23,19 +23,19 @@ const RegisterPage: NextPage = (props): JSX.Element => {
       setRegistering(true)
 
       register(email, password)
-      .then(() => {
-        router.push('/')
-      })
-      .catch((error: any)  => {
+        .then(() => {
+          router.push('/')
+        })
+        .catch((error: any) => {
 
-        if (error.code.includes('auth/weak-password')) {
-          setError('Please enter a stronger password')
-        } else if (error.code.includes('auth/email-already-in-use')) {
-          setError('Email already in use')
-        } else {
-          setError('Unable to register. Please try again later')
-        }
-      })
+          if (error.code.includes('auth/weak-password')) {
+            setError('Please enter a stronger password')
+          } else if (error.code.includes('auth/email-already-in-use')) {
+            setError('Email already in use')
+          } else {
+            setError('Unable to register. Please try again later')
+          }
+        })
 
       setRegistering(false)
 
@@ -43,10 +43,10 @@ const RegisterPage: NextPage = (props): JSX.Element => {
       setError('The two passwords do not match')
     }
   }
-  
+
   return (
     <div>
-      <form onSubmit={signUpWithEmailAndPassword}>
+      <form onSubmit={signUpWithEmailAndPassword} className='flex flex-col justify-center items-center m-12 gap-2'>
         <span>Email</span>
         <input
           type='email'

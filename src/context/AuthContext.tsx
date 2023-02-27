@@ -30,7 +30,7 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
     return () => unsubscribe()
   }, [])
 
-  const signup = (email: string, password: string) => {
+  const register = (email: string, password: string) => {
     return createUserWithEmailAndPassword(auth, email, password)
   }
 
@@ -44,7 +44,7 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout }}>
+    <AuthContext.Provider value={{ user, login, register, logout }}>
       {!loading && children}
     </AuthContext.Provider>
   )

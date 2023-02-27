@@ -9,7 +9,7 @@ import ProtectedRoute from '@/components/ProtectedRoute'
 const noAuthRequired = ['/', '/auth/login', '/auth/register']
 
 export default function App({ Component, pageProps }: AppProps) {
-
+  
   const router = useRouter()
 
   return (

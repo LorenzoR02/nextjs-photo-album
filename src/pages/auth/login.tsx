@@ -9,7 +9,7 @@ const LoginPage: NextPage = (props): JSX.Element => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [error, setError] = useState<string>('')
-  const { user, login } = useAuth()
+  const { login } = useAuth()
 
   const router = useRouter()
 
