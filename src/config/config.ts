@@ -7,6 +7,8 @@ const config = {
     messagingSenderId: process.env.NEXT_PUBLIC_MESSAGINGSENDERID,
     appId: process.env.NEXT_PUBLIC_APPID
   },
+  supportedFormats: ['image/png', 'image/jpeg', 'image/jpg'],
+  noAuthRequiredPaths: ['/', '/auth/login', '/auth/register'],
 }
 
 export default config

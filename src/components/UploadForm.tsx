@@ -5,6 +5,7 @@ import { useState } from "react"
 import ErrorText from "./ErrorText"
 import { v4 } from "uuid"
 import { arrayUnion, doc, setDoc } from "firebase/firestore"
+import config from "@/config/config"
 
 
 function UploadForm() {
@@ -13,12 +14,9 @@ function UploadForm() {
   const [error, setError] = useState('')
   const { user } = useAuth()
 
-  const types = ['image/png', 'image/jpeg', 'image/jpg']
-
   const changeHandler = (e: any) => {
-
     let selected = e.target.files[0]
-    if (selected && types.includes(selected.type)) {
+    if (selected && config.supportedFormats.includes(selected.type)) {
       setFile(selected)
       setError('')
     } else {
@@ -30,38 +28,27 @@ function UploadForm() {
   const uploadImage = () => {
     if (!file) return
 
-    const path = `${user.uid}/${v4()}`
-
+    const path = `${user.email}/${v4()}`
     const storageRef = ref(storage, path)
     uploadBytes(storageRef, file).then(() => {
       alert('uploaded')
       getDownloadURL(ref(storage, path))
       .then((url) => {
-
-        
         setUrl(url)
-
-
-
       })
       .catch((error) => {
-        // Handle any errors
-      });
+        console.log("An error occurred during the syncronization with the database")
+      })
+    }).catch((error) => {
+      console.log("An error occurred during the upload")
     })
-
-    console.log(path)
-    
-
-
   }
 
   const setUrl = async (url: string) => {
     await setDoc(doc(db, "users", user.uid), {
       images: arrayUnion(url)
     }, { merge: true });
-    
   }
-
 
   return (<>
     <input type="file" onChange={changeHandler} />

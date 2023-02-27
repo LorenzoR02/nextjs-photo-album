@@ -24,7 +24,7 @@ const RegisterPage: NextPage = (props): JSX.Element => {
 
       register(email, password)
         .then(() => {
-          router.push('/')
+          router.push('/gallery')
         })
         .catch((error: any) => {
 

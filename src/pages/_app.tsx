@@ -5,8 +5,7 @@ import { AppProps } from 'next/app'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import ProtectedRoute from '@/components/ProtectedRoute'
-
-const noAuthRequired = ['/', '/auth/login', '/auth/register']
+import config from '@/config/config'
 
 export default function App({ Component, pageProps }: AppProps) {
   
@@ -23,7 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
       <AuthContextProvider>
         <Navbar />
-        {noAuthRequired.includes(router.pathname)
+        {config.noAuthRequiredPaths.includes(router.pathname)
         ? 
           <Component {...pageProps} />
         :

@@ -1,7 +1,7 @@
 import UploadForm from "@/components/UploadForm"
 import { db } from "@/config/firebase";
 import { useAuth } from "@/context/AuthContext";
-import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { v4 } from "uuid";
@@ -9,42 +9,34 @@ import { v4 } from "uuid";
 function gallery() {
 
   const { user } = useAuth()
-  const [imagesElement, setImagesElement] = useState<any>([])
+  const [images, setImages] = useState<any>([])
 
   useEffect(() => {
-    generateImages()
-    const unsub = onSnapshot(doc(db, "users", user.uid), (doc) => {
-      createImages(doc)
-    });
-
+    if(user){
+      const unsub = onSnapshot(doc(db, "users", user.uid), (doc) => {
+        createElementsArray(doc)
+      })
+    }
 
   }, [])
 
-  async function generateImages() {
-    const docRef = doc(db, 'users', user.uid);
-    const docSnap = await getDoc(docRef);
+  function createElementsArray(doc: any) {
+    if (doc.exists()) {
+      const urlsArray = doc.data().images
 
-    createImages(docSnap)
-  }
-
-  function createImages(docSnap: any) {
-    if (docSnap.exists()) {
-      const imagesArray = docSnap.data().images
-
-      setImagesElement(imagesArray.map((url: string) => {
-        return <Image src={url} alt='Image' key={v4()} width={500} height={500} />
+      setImages(urlsArray.map((url: string) => {
+        return <Image src={url} alt='Image' key={v4()} width={200} height={500} priority />
       }))
 
     } else {
-      console.log("No such document!");
+      console.log("No images found");
     }
   }
 
   return (
     <div>
       <UploadForm />
-      <>{imagesElement}</>
-
+      <>{images}</>
     </div>
   )
 }
