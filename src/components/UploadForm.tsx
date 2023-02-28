@@ -34,7 +34,7 @@ function UploadForm() {
       alert('uploaded')
       getDownloadURL(ref(storage, path))
       .then((url) => {
-        setUrl(url)
+        addImageDB(url, path)
       })
       .catch((error) => {
         console.log("An error occurred during the syncronization with the database")
@@ -44,9 +44,12 @@ function UploadForm() {
     })
   }
 
-  const setUrl = async (url: string) => {
+  const addImageDB = async (url: string, name: string) => {
     await setDoc(doc(db, "users", user.uid), {
-      images: arrayUnion(url)
+      images: arrayUnion({
+        url: url,
+        name: name
+      })
     }, { merge: true });
   }
 
