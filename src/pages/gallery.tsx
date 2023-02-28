@@ -28,8 +28,8 @@ function gallery() {
       array = objArray
 
       setImages(objArray?.map((obj: any) => {
-        return <div key={v4()}>
-          <Image src={obj.url} alt='Image' width={200} height={500} priority />
+        return <div key={v4()} className='flex flex-col items-center justify-center gap-2'>
+          <Image src={obj.url} alt='Image' width={200} height={200} priority />
           <button onClick={() => { deleteImage(obj.url) }} >Delete</button>
         </div>
       }))
@@ -59,7 +59,9 @@ function gallery() {
   return (
     <div>
       <UploadForm />
-      <>{images}</>
+      <div className="p-12 grid grid-cols-3 gap-4">
+        {images}
+      </div>
     </div>
   )
 }

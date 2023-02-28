@@ -9,38 +9,35 @@ import config from "@/config/config"
 
 
 function UploadForm() {
-
-  const [file, setFile] = useState(null)
   const [error, setError] = useState('')
   const { user } = useAuth()
 
   const changeHandler = (e: any) => {
+    setError('')
+    
     let selected = e.target.files[0]
     if (selected && config.supportedFormats.includes(selected.type)) {
-      setFile(selected)
-      setError('')
+      uploadImage(selected)
     } else {
-      setFile(null)
-      setError('Errore')
+      setError('Unsupported format')
     }
   }
 
-  const uploadImage = () => {
+  const uploadImage = (file: any) => {
     if (!file) return
 
     const path = `${user.email}/${v4()}`
     const storageRef = ref(storage, path)
     uploadBytes(storageRef, file).then(() => {
-      alert('uploaded')
       getDownloadURL(ref(storage, path))
       .then((url) => {
         addImageDB(url, path)
       })
       .catch((error) => {
-        console.log("An error occurred during the syncronization with the database")
+        setError("An error occurred during the syncronization with the database")
       })
     }).catch((error) => {
-      console.log("An error occurred during the upload")
+      setError("An error occurred during the upload")
     })
   }
 
@@ -53,10 +50,13 @@ function UploadForm() {
     }, { merge: true });
   }
 
-  return (<>
-    <input type="file" onChange={changeHandler} />
-    {file !== null && <button onClick={uploadImage}>Upload</button>}
-    <ErrorText error={error} /></>
+  return (
+    <div className="flex gap-2 mt-12 justify-center items-center">
+    <label className="border-black hover:bg-slate-200 w-12 h-12 text-4xl border rounded-xl text-center" >+
+      <input type="file" onChange={changeHandler} className='hidden' />
+    </label>
+    <ErrorText error={error} />
+    </div>
   )
 }
 

@@ -14,10 +14,12 @@ const LogoutPage: NextPage = (props): JSX.Element => {
 
 
   return (
-    <div>
+    <div className='flex flex-col justify-center items-center m-12 gap-2'>
       <p>Are you sure you want to logout?</p>
+      <div className="flex gap-4">
       <button onClick={() => { router.back() }}>Cancel</button>
       <button onClick={Logout}>Logout</button>
+      </div>
     </div>
   )
 }

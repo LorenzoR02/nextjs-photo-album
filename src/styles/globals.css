@@ -9,9 +9,13 @@
 }
 
 @layer components { 
-  input {
+  input, button {
     border: 1px solid #00000025;
     border-radius: 4px;
     padding: 0px 4px 0px 4px;
+  }
+
+  input[type=submit], button:hover {
+    background-color: #dfdfdf;
   }
 }

@@ -30,7 +30,7 @@ const LoginPage: NextPage = (props): JSX.Element => {
         } else if (error.code.includes('auth/email-already-in-use')) {
           setError('Email already in use')
         } else {
-          setError('Unable to register. Please try again later')
+          setError('Unable to login. Please try again later')
         }
       })
 
@@ -40,7 +40,7 @@ const LoginPage: NextPage = (props): JSX.Element => {
 
   return (
     <div>
-      <form onSubmit={loginWithEmailAndPassword}>
+      <form onSubmit={loginWithEmailAndPassword} className='flex flex-col justify-center items-center m-12 gap-2'>
         <span>Email</span>
         <input
           type='email'
